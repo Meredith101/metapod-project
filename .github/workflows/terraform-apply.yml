@@ -1,21 +1,42 @@
-# name: Terraform Apply
+name: Deploy EKS Cluster
 
-# on:
-#   push:
-#     branches: [ main ]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-# jobs:
-#   terraform:
-#     runs-on: ubuntu-latest
+jobs:
+  terraform:
+    name: Terraform Apply EKS
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v2
+    permissions:
+      id-token: write
+      contents: read
 
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-#       - name: Terraform Init
-#         run: terraform init
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.0
 
-#       - name: Terraform Apply
-#         run: terraform apply -auto-approve
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
