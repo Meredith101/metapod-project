@@ -32,11 +32,11 @@ jobs:
           aws-region: eu-west-2
 
       - name: Terraform Init
-        run: terraform init
+        run: cd tf-files && terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: cd tf-files && terraform plan -out=tfplan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve tfplan
+        run: cd tf-files && terraform apply -auto-approve tfplan
