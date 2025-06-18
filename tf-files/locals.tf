@@ -1,3 +1,3 @@
 locals {
-  cluster_name = "nice-cluster!" 
+  cluster_name = "nice-cluster" 
 }
