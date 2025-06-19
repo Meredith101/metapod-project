@@ -1,4 +1,4 @@
-module "eks" {
+module "eks-security-groups" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "17.24.0"
   cluster_name    = local.cluster_name 
