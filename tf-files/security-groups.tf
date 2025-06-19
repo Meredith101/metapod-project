@@ -1,5 +1,5 @@
-resource "aws_security_group" "worker_group_mgmt_one" {
-  name_prefix = "worker_group_mgmt_one"
+resource "aws_security_group" "nice-cluster-group-1" {
+  name_prefix = "nice-cluster-group-1"
   vpc_id      = aws_default_vpc.default_vpc.id
 
   ingress {
@@ -13,8 +13,8 @@ resource "aws_security_group" "worker_group_mgmt_one" {
   }
 }
 
-resource "aws_security_group" "worker_group_mgmt_two" {
-  name_prefix = "worker_group_mgmt_two"
+resource "aws_security_group" "nice-cluster-group-2" {
+  name_prefix = "nice-cluster-group-2"
   vpc_id      = aws_default_vpc.default_vpc.id
 
   ingress {
