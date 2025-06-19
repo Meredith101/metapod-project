@@ -1,6 +1,6 @@
 resource "aws_security_group" "nice-cluster-group-1" {
   name_prefix = "nice-cluster-group-1"
-  vpc_id      = aws_default_vpc.default_vpc.id
+  vpc_id      = vpc-080dbb0b7dc86503a
 
   ingress {
     from_port = 22
@@ -15,7 +15,7 @@ resource "aws_security_group" "nice-cluster-group-1" {
 
 resource "aws_security_group" "nice-cluster-group-2" {
   name_prefix = "nice-cluster-group-2"
-  vpc_id      = aws_default_vpc.default_vpc.id
+  vpc_id      = vpc-080dbb0b7dc86503a
 
   ingress {
     from_port = 22
@@ -30,7 +30,7 @@ resource "aws_security_group" "nice-cluster-group-2" {
 
 resource "aws_security_group" "all_worker_mgmt" {
   name_prefix = "all_worker_management"
-  vpc_id      = aws_default_vpc.default_vpc.id
+  vpc_id      = vpc-080dbb0b7dc86503a
 
   ingress {
     from_port = 22

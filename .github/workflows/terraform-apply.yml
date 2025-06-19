@@ -32,7 +32,7 @@ jobs:
           aws-region: eu-west-2
 
       - name: Terraform Init
-        run: cd tf-files && terraform init
+        run: cd tf-files && terraform init -upgrade
 
       - name: Terraform Plan
         run: cd tf-files && terraform plan -out=tfplan
