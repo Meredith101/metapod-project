@@ -1,6 +1,5 @@
-variable "region" {
-  default     = "eu-west-2"
-  description = "AWS region"
+provider "aws" {
+  region = var.aws_region
 }
 
 resource "aws_default_vpc" "default_vpc" {

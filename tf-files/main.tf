@@ -1,18 +1,22 @@
+provider "aws" {
+  region = var.aws_region
+}
+
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "17.24.0"
-  cluster_name    = local.cluster_name 
-  cluster_version = "1.29"
+
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
   subnets         = data.aws_subnets.vpc_subnets.ids
+  vpc_id          = aws_default_vpc.default_vpc.id
 
   tags = {
-    Environment = "training"
+    Environment = var.environment
   }
 
-  vpc_id = aws_default_vpc.default_vpc.id
-
   workers_group_defaults = {
-    root_volume_type = "gp2"
+    root_volume_type = var.root_volume_type
   }
 
   worker_groups = [
@@ -21,17 +25,17 @@ module "eks" {
       instance_type                 = "t2.small"
       additional_userdata           = "echo foo bar"
       asg_desired_capacity          = 2
-      additional_security_group_ids = [aws_security_group.nice-cluster-group-1.id]
-      public_ip = true
+      additional_security_group_ids = [aws_security_group.nice_cluster_group_1.id]
+      public_ip                     = true
     },
     {
       name                          = "worker-group-2"
       instance_type                 = "t2.medium"
       additional_userdata           = "echo foo bar"
-      additional_security_group_ids = [aws_security_group.nice-cluster-group-2.id]
       asg_desired_capacity          = 1
-      public_ip = true
-    },
+      additional_security_group_ids = [aws_security_group.nice_cluster_group_2.id]
+      public_ip                     = true
+    }
   ]
 }
 
